@@ -1,0 +1,11 @@
+<configuration>
+    <!-- Отключаем DEBUG для всех библиотек -->
+    <logger name="io.qameta.allure" level="WARN"/>
+    <logger name="com.codeborne.selenide" level="WARN"/>
+    <logger name="org.openqa.selenium" level="WARN"/>
+
+    <!-- Оставляем только ошибки для всего остального -->
+    <root level="ERROR">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

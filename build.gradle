@@ -1,0 +1,103 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.11.2'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    // Selenide
+    testImplementation 'com.codeborne:selenide:6.19.1'
+
+    // REST Assured
+    testImplementation 'io.rest-assured:rest-assured:5.3.0'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+
+    // Allure
+    testImplementation 'io.qameta.allure:allure-junit5:2.24.0'
+    testImplementation 'io.qameta.allure:allure-rest-assured:2.24.0'
+    testImplementation 'io.qameta.allure:allure-selenide:2.24.0'
+    implementation 'org.aspectj:aspectjweaver:1.9.20.1'
+}
+
+allure {
+    version.set('2.24.0')
+
+    useJUnit5 {
+        version = '2.24.0'
+    }
+}
+
+// Общие настройки для всех тестовых задач
+def commonTestConfig = {
+    useJUnitPlatform()
+    systemProperties = [
+            'allure.results.directory': 'build/allure-results',
+    ] + System.getProperties()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+    }
+}
+
+// Основная задача test - все тесты
+test {
+    configure commonTestConfig
+    systemProperties += [
+            'selenide.browser': 'chrome',
+            'selenide.browserSize': '1920x1080',
+            'selenide.headless': 'false'
+    ]
+}
+
+// Задача для API тестов
+task apiTest(type: Test) {
+    configure commonTestConfig
+    useJUnitPlatform {
+        includeTags("api")
+    }
+    description = 'Запускает только API тесты'
+}
+
+// Задача для UI тестов
+task uiTest(type: Test) {
+    configure commonTestConfig
+    useJUnitPlatform {
+        includeTags("ui")
+    }
+    systemProperties += [
+            'selenide.browser': 'chrome',
+            'selenide.browserSize': '1920x1080',
+            'selenide.headless': 'false'
+    ]
+    description = 'Запускает только UI тесты'
+}
+
+// Задачи с отчетами
+task runAllTestsWithReport {
+    dependsOn clean, test, allureServe
+    group = 'verification'
+    description = 'Запускает ВСЕ тесты и открывает Allure отчет'
+}
+
+task runApiTestsWithReport {
+    dependsOn clean, apiTest, allureServe
+    group = 'verification'
+    description = 'Запускает только API тесты и открывает Allure отчет'
+}
+
+task runUiTestsWithReport {
+    dependsOn clean, uiTest, allureServe
+    group = 'verification'
+    description = 'Запускает только UI тесты и открывает Allure отчет'
+}
