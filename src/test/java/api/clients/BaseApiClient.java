@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BaseApiClient {
     protected static final String BASE_URL = "https://automationexercise.com/api";
 
-    //шаблон обычного запроса
     protected RequestSpecification request() {
         return RestAssured.given()
                 .baseUri(BASE_URL)
@@ -19,7 +18,6 @@ public class BaseApiClient {
                 .log().all();
     }
 
-    //шаблон запроса с form-data
     protected RequestSpecification formRequest() {
         return RestAssured.given()
                 .baseUri(BASE_URL)
@@ -40,7 +38,6 @@ public class BaseApiClient {
         return request().delete(endpoint);
     }
 
-    //отправка post с несколькими параметрами form-data
     protected Response postWithFormData(String endpoint, Map<String, String> formParams) {
         RequestSpecification request = formRequest();
         for (Map.Entry<String, String> entry : formParams.entrySet()) {
@@ -49,7 +46,6 @@ public class BaseApiClient {
         return request.post(endpoint);
     }
 
-    //отправка put с несколькими параметрами form-data
     protected Response putWithFormData(String endpoint, Map<String, String> formParams) {
         RequestSpecification request = formRequest();
         for (Map.Entry<String, String> entry : formParams.entrySet()) {
@@ -58,7 +54,6 @@ public class BaseApiClient {
         return request.put(endpoint);
     }
 
-    //отправка delete с несколькими параметрами form-data
     protected Response deleteWithFormData(String endpoint, Map<String, String> formParams){
         RequestSpecification request = formRequest();
         for (Map.Entry<String, String> entry : formParams.entrySet()) {
@@ -67,7 +62,6 @@ public class BaseApiClient {
         return request.delete(endpoint);
     }
 
-    //отправка get с query params
     protected Response getWithQueryParams(String endpoint, String email) {
         return RestAssured.given()
                 .baseUri(BASE_URL)

@@ -1,5 +1,6 @@
 package api.clients;
 
+import api.models.User;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
@@ -40,10 +41,17 @@ public class ProductsClient extends BaseApiClient {
         return postWithFormData("/searchProduct", formParams);
     }
 
-    public Response postToVerifyLoginWithValidData(String email, String password){
+    public Response postToVerifyLoginWithEmailAndPassword(User user){
         Map<String, String> formParams = new HashMap<>();
-        formParams.put("email", email);
-        formParams.put("password", password);
+        formParams.put("email", user.getEmail());
+        formParams.put("password", user.getPassword());
+        return postWithFormData("/verifyLogin", formParams);
+    }
+
+    public Response postToVerifyLoginWithInvalidEmailAndPassword(String invalidEmail, String invalidPassword){
+        Map<String, String> formParams = new HashMap<>();
+        formParams.put("email", invalidEmail + System.currentTimeMillis() + "@yahoo.com");
+        formParams.put("password", invalidPassword);
         return postWithFormData("/verifyLogin", formParams);
     }
 
@@ -53,64 +61,58 @@ public class ProductsClient extends BaseApiClient {
         return postWithFormData("/verifyLogin", formParams);
     }
 
-    public Response postToCreateAccount(String name, String email, String password, String title, String birthDate, String birthMonth, String birthYear,String firstName, String lastName, String company, String address1, String address2, String country, String zipcode, String state, String city, String MobileNumber){
+    public Response postToCreateAccount(User user) {
+        globalEmail  = user.getEmail();
         Map<String, String> formParams = new HashMap<>();
-        formParams.put("name", name);
-        String uniqueEmail = email + System.currentTimeMillis() + "@test.com";
-        globalEmail = uniqueEmail;
-        formParams.put("email", uniqueEmail);
-        formParams.put("password", password);
-        formParams.put("title", title);
-        formParams.put("birth_date", birthDate);
-        formParams.put("birth_mounth", birthMonth);
-        formParams.put("birth_year", birthYear);
-        formParams.put("firstname", firstName);
-        formParams.put("lastname", lastName);
-        formParams.put("company", company);
-        formParams.put("address1", address1);
-        formParams.put("address2", address2);
-        formParams.put("country", country);
-        formParams.put("zipcode", zipcode);
-        formParams.put("state", state);
-        formParams.put("city", city);
-        formParams.put("mobile_number", MobileNumber);
+        formParams.put("name", user.getName());
+        formParams.put("email", user.getEmail());
+        formParams.put("password", user.getPassword());
+        formParams.put("title", user.getTitle());
+        formParams.put("birth_day", user.getBirthDay());
+        formParams.put("birth_month", user.getBirthMonth());
+        formParams.put("birth_year", user.getBirthYear());
+        formParams.put("firstname", user.getFirstName());
+        formParams.put("lastname", user.getLastName());
+        formParams.put("company", user.getCompany());
+        formParams.put("address1", user.getAddress1());
+        formParams.put("country", user.getCountry());
+        formParams.put("zipcode", user.getZipcode());
+        formParams.put("state", user.getState());
+        formParams.put("city", user.getCity());
+        formParams.put("mobile_number", user.getMobileNumber());
         return postWithFormData("/createAccount", formParams);
     }
 
-    public Response putToUpdateAccount(String name, String email, String password, String title, String birthDate, String birthMonth, String birthYear,String firstName, String lastName, String company, String address1, String address2, String country, String zipcode, String state, String city, String MobileNumber){
+    public Response putToUpdateAccount(User user) {
         Map<String, String> formParams = new HashMap<>();
-        formParams.put("name", name);
+        formParams.put("name", user.getName());
         formParams.put("email", globalEmail);
-        formParams.put("password", password);
-        formParams.put("title", title);
-        formParams.put("birth_date", birthDate);
-        formParams.put("birth_mounth", birthMonth);
-        formParams.put("birth_year", birthYear);
-        formParams.put("firstname", firstName);
-        formParams.put("lastname", lastName);
-        formParams.put("company", company);
-        formParams.put("address1", address1);
-        formParams.put("address2", address2);
-        formParams.put("country", country);
-        formParams.put("zipcode", zipcode);
-        formParams.put("state", state);
-        formParams.put("city", city);
-        formParams.put("mobile_number", MobileNumber);
+        formParams.put("password", user.getPassword());
+        formParams.put("title", user.getTitle());
+        formParams.put("birth_day", user.getBirthDay());
+        formParams.put("birth_month", user.getBirthMonth());
+        formParams.put("birth_year", user.getBirthYear());
+        formParams.put("firstname", user.getFirstName());
+        formParams.put("lastname", user.getLastName());
+        formParams.put("company", user.getCompany());
+        formParams.put("address1", user.getAddress1());
+        formParams.put("country", user.getCountry());
+        formParams.put("zipcode", user.getZipcode());
+        formParams.put("state", user.getState());
+        formParams.put("city", user.getCity());
+        formParams.put("mobile_number", user.getMobileNumber());
+
         return putWithFormData("/updateAccount", formParams);
     }
 
-    public Response deleteUserAccount(String email, String password){
+    public Response deleteUserAccount(User user){
         Map<String, String> formParams = new HashMap<>();
-        formParams.put("email", globalEmail);
-        formParams.put("password", password);
+        formParams.put("email", user.getEmail());
+        formParams.put("password", user.getPassword());
         return deleteWithFormData("/deleteAccount", formParams);
     }
 
-    public Response getUserDetailByEmail(){
-        return getWithQueryParams("/getUserDetailByEmail", globalEmail);
-    }
-
-    public String getGlobalEmail() {
-        return globalEmail;
+    public Response getUserDetailByEmail(String email){
+        return getWithQueryParams("/getUserDetailByEmail", email);
     }
 }

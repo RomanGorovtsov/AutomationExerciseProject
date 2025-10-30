@@ -41,16 +41,16 @@ public class LoginSetupPage extends BasePage {
     private final SelenideElement emailOrPasswordIsIncorrectNotification = $x("//p[text()='Your email or password is incorrect!']");
     private final SelenideElement emailAddressAlreadyExistError = $x("//p[text() = 'Email Address already exist!']");
 
-    public void newUserSignUpTitleIsVisible() {
-        newUserSignUpTitle.shouldBe(visible);
+    public boolean newUserSignUpTitleIsVisible() {
+        return newUserSignUpTitle.is(visible);
     }
 
-    public void loginToYourAccountTitleIsVisible() {
-        loginToYourAccountTitle.shouldBe(visible);
+    public boolean loginToYourAccountTitleIsVisible() {
+        return loginToYourAccountTitle.is(visible);
     }
 
-    public void emailOrPasswordIsIncorrectNotificationIsVisible() {
-        emailOrPasswordIsIncorrectNotification.shouldBe(visible);
+    public boolean emailOrPasswordIsIncorrectNotificationIsVisible() {
+        return emailOrPasswordIsIncorrectNotification.is(visible);
     }
 
     public LoginSetupPage enterNameAndEmailAddress(String name, String emailAddress) {
@@ -73,8 +73,8 @@ public class LoginSetupPage extends BasePage {
         loginButton.click();
     }
 
-    public void shouldVisibleAccountCreatedNotification() {
-        accountCreatedNotification.shouldBe(visible);
+    public boolean shouldVisibleAccountCreatedNotification() {
+        return accountCreatedNotification.is(visible);
     }
 
     public void enterAccountInformation(String password, String day, String month, String year) {
@@ -101,17 +101,16 @@ public class LoginSetupPage extends BasePage {
         createAccountButton.click();
     }
 
-
-    public void shouldVisibleEnterAccountInformationTitle() {
-        enterAccountInformationTitle.shouldBe(visible);
+    public boolean shouldVisibleEnterAccountInformationTitle() {
+        return enterAccountInformationTitle.is(visible);
     }
 
-    public void shouldVisibleEmailAddressAlreadyExistError() {
-        emailAddressAlreadyExistError.shouldBe(visible);
+    public boolean shouldVisibleEmailAddressAlreadyExistError() {
+        return emailAddressAlreadyExistError.is(visible);
     }
 
-    public void shouldVisibleAccountDeletedNotification() {
-        accountDeletedNotification.shouldBe(visible);
+    public boolean shouldVisibleAccountDeletedNotification() {
+        return accountDeletedNotification.is(visible);
     }
 
     public void clickContinueButton() {

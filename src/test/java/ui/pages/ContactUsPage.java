@@ -27,8 +27,8 @@ public class ContactUsPage extends BasePage {
         yourMessageHereField.sendKeys(message);
     }
 
-    public void getInTouchTitleIsVisible(){
-        getInTouchTitle.shouldBe(visible);
-    }
+    public boolean getInTouchTitleIsVisible(){
+            return getInTouchTitle.is(visible);
+        }
 }
 

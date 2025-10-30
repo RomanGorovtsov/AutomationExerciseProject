@@ -14,9 +14,8 @@ public class MainPage extends BasePage {
     private final SelenideElement logOutButton = $x("//*[text() = ' Logout']");
     private final SelenideElement contactUsButton = $x("//a[text() = ' Contact us']");
 
-    // Проверка загрузки страницы
-    public void shouldBeOpened() {
-        mainPageMarker.shouldBe(visible);
+    public SelenideElement shouldBeOpened() {
+        return mainPageMarker.shouldBe(visible);
     }
 
     public void clickSingUpLogInButton() {
@@ -35,7 +34,7 @@ public class MainPage extends BasePage {
         logOutButton.click();
     }
 
-    public void shouldVisibleLoggedInAsTittle() {
-        loggedInAsTittle.shouldBe(visible);
+    public SelenideElement shouldVisibleLoggedInAsTittle() {
+        return loggedInAsTittle.shouldBe(visible);
     }
 }
