@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'io.qameta.allure' version '2.11.2'
+    id 'io.freefair.lombok' version '8.4'
 }
 
 group = 'org.example'
@@ -11,6 +12,8 @@ repositories {
 }
 
 dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'com.codeborne:selenide:6.19.1'
@@ -21,7 +24,9 @@ dependencies {
     testImplementation 'io.qameta.allure:allure-selenide:2.24.0'
     implementation 'org.aspectj:aspectjweaver:1.9.20.1'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
-}
+    testImplementation 'org.slf4j:slf4j-api:2.0.9'
+    testImplementation 'ch.qos.logback:logback-classic:1.4.14'
+    testImplementation 'io.rest-assured:rest-assured:5.4.0'}
 
 allure {
     version.set('2.24.0')
@@ -110,4 +115,8 @@ task runApiNegativeTestsWithReport {
     dependsOn clean, apiNegativeTest, allureServe
     group = 'verification'
     description = 'Запускает только API негативные тесты и открывает Allure отчет'
+}
+
+compileJava {
+    options.annotationProcessorPath = configurations.annotationProcessor
 }

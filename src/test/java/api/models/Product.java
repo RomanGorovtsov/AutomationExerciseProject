@@ -1,5 +1,8 @@
 package api.models;
 
+import lombok.Data;
+
+@Data
 public class Product {
     private int id;
     private String name;
@@ -7,23 +10,14 @@ public class Product {
     private String brand;
     private Category category;
 
-    public int getId() { return id; }
-    public String getName() { return name; }
-    public String getPrice() { return price; }
-    public String getBrand() { return brand; }
-    public Category getCategory() { return category; }
-
+    @Data
     public static class Category {
         private UserType usertype;
         private String category;
-
-        public UserType getUsertype() { return usertype; }
-        public String getCategory() { return category; }
     }
 
+    @Data
     public static class UserType {
         private String usertype;
-
-        public String getUsertype() { return usertype; }
     }
 }
