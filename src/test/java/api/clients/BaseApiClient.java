@@ -2,23 +2,13 @@ package api.clients;
 
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.BeforeAll;
-
 import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BaseApiClient {
     protected static final String BASE_URL = "https://automationexercise.com/api";
-
-    @BeforeAll
-    static void setupAPILogging() {
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
-    }
 
     protected RequestSpecification request() {
         return RestAssured.given()

@@ -7,6 +7,21 @@ https://automationexercise.com/api_list
 ## Ссылки на GUI спецификацию
 https://automationexercise.com/test_cases
 
+## Основные фреймворки
+Selenium WebDriver - для автоматизации UI тестов
+REST Assured - для автоматизации API тестов
+JUnit 5 - фреймворк для запуска тестов
+Gradle - система сборки
+
+## Интегрированные библиотеки
+Lombok - для сокращения шаблонного кода через аннотации
+Logback - для логирования событий выполнения тестов
+
+## Вспомогательные библиотеки
+Allure Framework - для генерации отчетов
+JavaFaker - для генерации тестовых данных
+WebDriverManager - для управления драйверами браузеров
+
 ## Команды для запуска тестов
 **Все тесты**
 ./gradlew test
@@ -34,6 +49,10 @@ src/test/java/ui/ - UI тесты (помечены тегом @Tag("ui"))
 src/test/java/api/ - API тесты (помечены тегом @Tag("api"))
 src/test/java/api/tests/ApiPositiveTests - позитивные API тесты
 src/test/java/api/tests/ApiNegativeTests - негативные API тесты
+src/test/java/api/clients - API клиенты и спецификации
+src/test/java/api/models - DTO модели с Lombok аннотациями
+src/test/java/resources/logback.xml - конфигурация Logback
+src/test/java/resources/application.properties - настройки приложения
 
 ## Настройки
 Браузер: Chrome

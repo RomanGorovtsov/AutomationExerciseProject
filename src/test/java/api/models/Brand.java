@@ -1,9 +1,9 @@
 package api.models;
 
+import lombok.Data;
+
+@Data
 public class Brand {
     private int id;
     private String brand;
-
-    public int getId() { return id; }
-    public String getBrand() { return brand; }
 }

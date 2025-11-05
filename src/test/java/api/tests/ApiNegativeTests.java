@@ -2,13 +2,15 @@ package api.tests;
 
 import api.clients.BaseApiClient;
 import api.clients.ProductsClient;
+import api.config.ApiTestConfig;
 import io.restassured.response.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ApiNegativeTests extends BaseApiClient {
+public class ApiNegativeTests extends BaseApiClient implements ApiTestConfig {
     private final ProductsClient productsClient = new ProductsClient();
 
     @Test
@@ -61,13 +63,4 @@ public class ApiNegativeTests extends BaseApiClient {
         assertEquals(404, response.jsonPath().getInt("responseCode"));
         assertEquals("User not found!", response.jsonPath().getString("message"));
     }
-
-
-
-
-
-
-
-
-
 }
