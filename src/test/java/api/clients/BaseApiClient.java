@@ -8,19 +8,14 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BaseApiClient {
-    protected static final String BASE_URL = "https://automationexercise.com/api";
 
-    protected RequestSpecification request() {
+protected RequestSpecification request() {
         return RestAssured.given()
-                .baseUri(BASE_URL)
                 .filter(new AllureRestAssured());
     }
 
     protected RequestSpecification formRequest() {
-        return RestAssured.given()
-                .baseUri(BASE_URL)
-                .contentType("multipart/form-data")
-                .filter(new AllureRestAssured());
+        return request().contentType("multipart/form-data");
     }
 
     protected Response get(String endpoint) {
@@ -61,7 +56,6 @@ public class BaseApiClient {
 
     protected Response getWithQueryParams(String endpoint, String email) {
         return RestAssured.given()
-                .baseUri(BASE_URL)
                 .queryParam("email", email)
                 .get(endpoint);
     }

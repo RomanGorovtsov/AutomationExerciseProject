@@ -4,7 +4,6 @@ import api.clients.BaseApiClient;
 import api.clients.ProductsClient;
 import api.config.ApiTestConfig;
 import io.restassured.response.Response;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
