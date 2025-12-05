@@ -25,8 +25,4 @@ public class ContactUsFormTest {
         mainPage.clickContactUsButton();
         contactUsPage.getInTouchTitleIsVisible();
     }
-
-
-
-
 }

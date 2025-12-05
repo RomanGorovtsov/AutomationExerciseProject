@@ -20,7 +20,7 @@ public class ProductsClient extends BaseApiClient {
     private String getBaseUrlFromProperties() {
         Properties prop = new Properties();
         try {
-            InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties");
+            InputStream input = getClass().getClassLoader().getResourceAsStream("config/api.properties");
             prop.load(input);
             return prop.getProperty("base.url");
         } catch (Exception e) {

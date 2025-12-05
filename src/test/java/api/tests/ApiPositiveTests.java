@@ -2,7 +2,6 @@ package api.tests;
 
 import api.clients.BaseApiClient;
 import api.clients.ProductsClient;
-import api.config.ApiTestConfig;
 import api.generators.UserGenerator;
 import api.models.Brand;
 import api.models.Product;
@@ -17,7 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ApiPositiveTests extends BaseApiClient implements ApiTestConfig{
+public class ApiPositiveTests extends BaseApiClient {
 
     private final ProductsClient productsClient = new ProductsClient();
 
