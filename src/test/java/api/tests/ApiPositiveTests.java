@@ -2,7 +2,6 @@ package api.tests;
 
 import api.clients.BaseApiClient;
 import api.clients.ProductsClient;
-import api.config.ApiTestConfig;
 import api.generators.UserGenerator;
 import api.models.Brand;
 import api.models.Product;
@@ -17,7 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ApiPositiveTests extends BaseApiClient implements ApiTestConfig{
+public class ApiPositiveTests extends BaseApiClient {
 
     private final ProductsClient productsClient = new ProductsClient();
 
@@ -68,6 +67,7 @@ public class ApiPositiveTests extends BaseApiClient implements ApiTestConfig{
         Response response = productsClient.postToVerifyLoginWithEmailAndPassword(user);
         assertEquals(200, response.jsonPath().getInt("responseCode"));
         assertEquals("User exists!", response.jsonPath().getString("message"));
+        productsClient.deleteUserAccount(user);
     }
 
     @Test
@@ -78,6 +78,7 @@ public class ApiPositiveTests extends BaseApiClient implements ApiTestConfig{
         Response response = productsClient.postToCreateAccount(user);
         assertEquals(201, response.jsonPath().getInt("responseCode"));
         assertEquals("User created!", response.jsonPath().getString("message"));
+        productsClient.deleteUserAccount(user);
     }
 
     @Test
@@ -89,6 +90,7 @@ public class ApiPositiveTests extends BaseApiClient implements ApiTestConfig{
         Response response = productsClient.putToUpdateAccount(user);
         assertEquals(200, response.jsonPath().getInt("responseCode"));
         assertEquals("User updated!", response.jsonPath().getString("message"));
+        productsClient.deleteUserAccount(user);
     }
 
     @Test

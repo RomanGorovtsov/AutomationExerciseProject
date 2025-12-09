@@ -2,14 +2,13 @@ package api.tests;
 
 import api.clients.BaseApiClient;
 import api.clients.ProductsClient;
-import api.config.ApiTestConfig;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ApiNegativeTests extends BaseApiClient implements ApiTestConfig {
+public class ApiNegativeTests extends BaseApiClient {
     private final ProductsClient productsClient = new ProductsClient();
 
     @Test

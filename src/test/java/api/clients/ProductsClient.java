@@ -8,26 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import static io.restassured.RestAssured.put;
+
 
 public class ProductsClient extends BaseApiClient {
 
     String baseUrl;
-
-    public ProductsClient() {
-        this.baseUrl = getBaseUrlFromProperties();
-    }
-
-    private String getBaseUrlFromProperties() {
-        Properties prop = new Properties();
-        try {
-            InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties");
-            prop.load(input);
-            return prop.getProperty("base.url");
-        } catch (Exception e) {
-            return "https://google.com/api";
-        }
-    }
-
     private static final String PRODUCTS_LIST = "/productsList";
     private static final String BRANDS_LIST = "/brandsList";
     private static final String SEARCH_PRODUCT = "/searchProduct";
@@ -36,6 +22,21 @@ public class ProductsClient extends BaseApiClient {
     private static final String UPDATE_ACCOUNT = "/updateAccount";
     private static final String DELETE_ACCOUNT = "/deleteAccount";
     private static final String USER_DETAIL_BY_EMAIL = "/getUserDetailByEmail";
+
+    public ProductsClient() {
+        this.baseUrl = getBaseUrlFromProperties();
+    }
+
+    private String getBaseUrlFromProperties() {
+        Properties prop = new Properties();
+        try {
+            InputStream input = getClass().getClassLoader().getResourceAsStream("config.api.properties");
+            prop.load(input);
+            return prop.getProperty("base.url");
+        } catch (Exception e) {
+            return "https://google.com/api";
+        }
+    }
 
     public Response getAllProducts() {
         return get(getFullEndPoint(PRODUCTS_LIST));
@@ -54,7 +55,7 @@ public class ProductsClient extends BaseApiClient {
     }
 
     public Response putBrandsList(){
-        return post(getFullEndPoint(BRANDS_LIST));
+        return put(getFullEndPoint(BRANDS_LIST));
     }
 
     public Response deleteVerifyLogin(){
