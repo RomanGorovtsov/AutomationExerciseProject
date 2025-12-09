@@ -3,13 +3,17 @@
 build/
 src/wrapper/
 src/caches/
+src/native
+src/daemon
+src/logs
 *.jar
 
 ### IntelliJ IDEA ###
 .idea/
 *.iws
 *.iml
-*.ipr
+*.iprgit add .gitignore
+
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
