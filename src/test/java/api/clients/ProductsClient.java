@@ -1,12 +1,10 @@
 package api.clients;
 
+import api.config.ApiConfig;
 import api.models.User;
 import io.restassured.response.Response;
-
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import static io.restassured.RestAssured.put;
 
@@ -14,6 +12,7 @@ import static io.restassured.RestAssured.put;
 public class ProductsClient extends BaseApiClient {
 
     String baseUrl;
+
     private static final String PRODUCTS_LIST = "/productsList";
     private static final String BRANDS_LIST = "/brandsList";
     private static final String SEARCH_PRODUCT = "/searchProduct";
@@ -24,18 +23,8 @@ public class ProductsClient extends BaseApiClient {
     private static final String USER_DETAIL_BY_EMAIL = "/getUserDetailByEmail";
 
     public ProductsClient() {
-        this.baseUrl = getBaseUrlFromProperties();
-    }
-
-    private String getBaseUrlFromProperties() {
-        Properties prop = new Properties();
-        try {
-            InputStream input = getClass().getClassLoader().getResourceAsStream("config.api.properties");
-            prop.load(input);
-            return prop.getProperty("base.url");
-        } catch (Exception e) {
-            return "https://google.com/api";
-        }
+        ApiConfig config = new ApiConfig();
+        this.baseUrl = config.getUrlFromProperties();
     }
 
     public Response getAllProducts() {
@@ -89,12 +78,12 @@ public class ProductsClient extends BaseApiClient {
     }
 
     public Response postToCreateAccount(User user) {
-        Map<String, String> formParams = user.toFormParamsMapWithFullUserData();
+        Map<String, String> formParams = user.convertUserDataToMap();
         return postWithFormData(getFullEndPoint(CREATE_ACCOUNT), formParams);
     }
 
     public Response putToUpdateAccount(User user) {
-        Map<String, String> formParams = user.toFormParamsMapWithFullUserData();
+        Map<String, String> formParams = user.convertUserDataToMap();
         return putWithFormData(getFullEndPoint(UPDATE_ACCOUNT), formParams);
     }
 

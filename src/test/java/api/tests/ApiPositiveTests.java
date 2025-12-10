@@ -14,15 +14,18 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
+@Tag("api")
+@Tag("positive")
 public class ApiPositiveTests extends BaseApiClient {
 
     private final ProductsClient productsClient = new ProductsClient();
 
     @Test()
-    @Tag("api")
-    @DisplayName("GET запрос на получение списка всех продуктов /productsList")
+    @DisplayName("Проверка GET запроса на получение списка всех продуктов /productsList")
     public void testGetAllProducts() {
         Response response = productsClient.getAllProducts();
         assertEquals(200, response.jsonPath().getInt("responseCode"));
@@ -38,8 +41,7 @@ public class ApiPositiveTests extends BaseApiClient {
     }
 
     @Test()
-    @Tag("api")
-    @DisplayName("GET запрос на получение всех брендов")
+    @DisplayName("Проверка GET запроса на получение всех брендов /brandsList")
     public void testGetAllBrands() {
         Response response = productsClient.getAllBrandsList();
         assertEquals(200, response.jsonPath().getInt("responseCode"));
@@ -49,8 +51,7 @@ public class ApiPositiveTests extends BaseApiClient {
     }
 
     @Test
-    @Tag("api")
-    @DisplayName("POST запрос с параметром на поиск продуктов /searchProduct")
+    @DisplayName("Проверка POST запроса с параметром на поиск продуктов /searchProduct")
     public void testSearchProductsWithFormData() {
         Response response = productsClient.searchProductWithFormatData("top");
         assertEquals(200, response.jsonPath().getInt("responseCode"));
@@ -59,8 +60,7 @@ public class ApiPositiveTests extends BaseApiClient {
     }
 
     @Test
-    @Tag("api")
-    @DisplayName("POST запрос на валидацию логина с валидными имейлом и паролем /verifyLogin")
+    @DisplayName("Проверка POST запроса на валидацию логина с валидными имейлом и паролем /verifyLogin")
     public void testPostToVerifyLogin() {
         User user = UserGenerator.generateRandomUser();
         productsClient.postToCreateAccount(user);
@@ -71,8 +71,7 @@ public class ApiPositiveTests extends BaseApiClient {
     }
 
     @Test
-    @Tag("api")
-    @DisplayName("POST запрос на создание аккаунта /createAccount")
+    @DisplayName("Проверка POST запроса на создание аккаунта /createAccount")
     public void testPostToCreateOrRegisterUserAccount() {
         User user = UserGenerator.generateRandomUser();
         Response response = productsClient.postToCreateAccount(user);
@@ -82,8 +81,7 @@ public class ApiPositiveTests extends BaseApiClient {
     }
 
     @Test
-    @Tag("api")
-    @DisplayName("PUT запрос на обновление аккаунта /updateAccount")
+    @DisplayName("Проверка PUT запроса на обновление аккаунта /updateAccount")
     public void testPutToUpdateUserAccount() {
         User user = UserGenerator.generateRandomUser();
         productsClient.postToCreateAccount(user);
@@ -94,8 +92,7 @@ public class ApiPositiveTests extends BaseApiClient {
     }
 
     @Test
-    @Tag("api")
-    @DisplayName("DELETE запрос на удаление аккаунта /deleteAccount")
+    @DisplayName("Проверка DELETE запроса на удаление аккаунта /deleteAccount")
     public void testDeleteUserAccount() {
         User user = UserGenerator.generateRandomUser();
         productsClient.postToCreateAccount(user);
@@ -105,8 +102,7 @@ public class ApiPositiveTests extends BaseApiClient {
     }
 
     @Test
-    @Tag("api")
-    @DisplayName("GET запрос на получение деталей пользователя /getUserDetailByEmail")
+    @DisplayName("Проверка GET запроса на получение деталей пользователя /getUserDetailByEmail")
     public void testGetUserDetailByEmail() {
         User user = UserGenerator.generateRandomUser();
         productsClient.postToCreateAccount(user);
