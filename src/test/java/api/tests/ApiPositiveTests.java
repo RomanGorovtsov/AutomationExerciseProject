@@ -28,7 +28,7 @@ public class ApiPositiveTests extends BaseApiClient {
     @DisplayName("Проверка GET запроса на получение списка всех продуктов /productsList")
     public void testGetAllProducts() {
         Response response = productsClient.getAllProducts();
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
 
         List<Product> products = response.jsonPath().getList("products", Product.class);
         assertTrue(products.stream().allMatch(product ->
@@ -44,7 +44,7 @@ public class ApiPositiveTests extends BaseApiClient {
     @DisplayName("Проверка GET запроса на получение всех брендов /brandsList")
     public void testGetAllBrands() {
         Response response = productsClient.getAllBrandsList();
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
         List<Brand> brands = response.jsonPath().getList("brands", Brand.class);
         assertTrue(brands.stream().allMatch(brand -> brand.getId() > 0
                 && brand.getBrand() != null));
@@ -54,7 +54,7 @@ public class ApiPositiveTests extends BaseApiClient {
     @DisplayName("Проверка POST запроса с параметром на поиск продуктов /searchProduct")
     public void testSearchProductsWithFormData() {
         Response response = productsClient.searchProductWithFormatData("top");
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
         List<Object> products = response.jsonPath().getList("products");
         assertFalse(products.isEmpty());
     }
@@ -65,7 +65,7 @@ public class ApiPositiveTests extends BaseApiClient {
         User user = UserGenerator.generateRandomUser();
         productsClient.postToCreateAccount(user);
         Response response = productsClient.postToVerifyLoginWithEmailAndPassword(user);
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
         assertEquals("User exists!", response.jsonPath().getString("message"));
         productsClient.deleteUserAccount(user);
     }
@@ -86,7 +86,7 @@ public class ApiPositiveTests extends BaseApiClient {
         User user = UserGenerator.generateRandomUser();
         productsClient.postToCreateAccount(user);
         Response response = productsClient.putToUpdateAccount(user);
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
         assertEquals("User updated!", response.jsonPath().getString("message"));
         productsClient.deleteUserAccount(user);
     }
@@ -97,7 +97,7 @@ public class ApiPositiveTests extends BaseApiClient {
         User user = UserGenerator.generateRandomUser();
         productsClient.postToCreateAccount(user);
         Response response = productsClient.deleteUserAccount(user);
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
         assertEquals("Account deleted!", response.jsonPath().getString("message"));
     }
 
@@ -107,7 +107,7 @@ public class ApiPositiveTests extends BaseApiClient {
         User user = UserGenerator.generateRandomUser();
         productsClient.postToCreateAccount(user);
         Response response = productsClient.getUserDetailByEmail(user.getEmail());
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
 
         ResponseBody body = response.getBody();
         assertEquals(user.getName(), body.jsonPath().getString("user.name"));

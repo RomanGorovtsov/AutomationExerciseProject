@@ -31,7 +31,7 @@ public class ApiNegativeTests extends BaseApiClient {
     @DisplayName("Проверка POST запроса без параметра поиска /searchProduct")
     public void testSearchProductsWithoutFormData() {
         Response response = productsClient.postToSearchProductsWithoutParams();
-        assertEquals(400, response.jsonPath().getInt("responseCode"));
+        assertBadRequest400(response);
         assertEquals("Bad request, search_product parameter is missing in POST request.", response.jsonPath().getString("message"));
     }
 
@@ -39,11 +39,12 @@ public class ApiNegativeTests extends BaseApiClient {
     @DisplayName("Проверка POST запроса на валидацию логина без имейла /verifyLogin")
     public void testPostToVerifyLoginWithoutEmailParameter() {
         Response response = productsClient.postToVerifyLoginWithoutEmail("breakingbad");
-        assertEquals(400, response.jsonPath().getInt("responseCode"));
+        assertBadRequest400(response);
         assertEquals("Bad request, email or password parameter is missing in POST request.", response.jsonPath().getString("message"));
     }
 
-    @Test
+
+        @Test
     @DisplayName("Проверка DELETE запроса на POST-эндроинт /toVerifyLogin")
     public void testDeleteToVerifyLogin() {
         Response response = productsClient.deleteVerifyLogin();

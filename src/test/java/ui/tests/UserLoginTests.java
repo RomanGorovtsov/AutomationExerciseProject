@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.*;
 
+@Tag("ui")
 public class UserLoginTests {
 
     MainPage mainPage;
@@ -28,7 +29,6 @@ public class UserLoginTests {
     }
 
     @Test
-    @Tag("ui")
     void testFailedLoginWithWrongEmailAndPassword(){
         navigateToLoginPage();
         performLogin(WRONG_EMAIL, WRONG_PASSWORD);
@@ -36,7 +36,6 @@ public class UserLoginTests {
     }
 
     @Test
-    @Tag("ui")
     void testLogOut(){
         navigateToLoginPage();
         performLogin(VALID_EMAIL, VALID_PASSWORD);
