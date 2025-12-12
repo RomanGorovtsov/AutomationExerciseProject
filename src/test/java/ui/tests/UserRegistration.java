@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.*;
 
+@Tag("ui")
 public class UserRegistration extends BaseTest {
 
     MainPage mainPage;
@@ -26,7 +27,6 @@ public class UserRegistration extends BaseTest {
     }
 
     @Test
-    @Tag("ui")
     void testValidUserRegistration() {
         loginSetupPage.enterNameAndEmailAddress("Roman", "roman12345@genius.com");
         loginSetupPage.clickSignUpButton();
@@ -43,7 +43,6 @@ public class UserRegistration extends BaseTest {
 
 
     @Test
-    @Tag("ui")
     void registrationWithExistEmailAddress(){
             loginSetupPage.newUserSignUpTitleIsVisible();
             loginSetupPage.enterNameAndEmailAddress("Walter", "walterwhite1958@gmail.com");

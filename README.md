@@ -11,7 +11,7 @@ https://automationexercise.com/test_cases
 Selenium WebDriver - для автоматизации UI тестов
 REST Assured - для автоматизации API тестов
 JUnit 5 - фреймворк для запуска тестов
-Gradle - система сборки
+Gradle - система сборки[README.md](README.md)[README.md](README.md)
 
 ## Интегрированные библиотеки
 Lombok - для сокращения шаблонного кода через аннотации

@@ -26,7 +26,7 @@ public class User {
     private String city;
     private String mobileNumber;
 
-    public Map<String, String> toFormParamsMapWithFullUserData() {
+    public Map<String, String> convertUserDataToMap() {
         Map<String, String> formParams = new HashMap<>();
         formParams.put("name", this.name);
         formParams.put("email", this.email);

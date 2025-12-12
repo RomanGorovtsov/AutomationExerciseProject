@@ -14,18 +14,21 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
+@Tag("api")
+@Tag("positive")
 public class ApiPositiveTests extends BaseApiClient {
 
     private final ProductsClient productsClient = new ProductsClient();
 
     @Test()
-    @Tag("api")
-    @DisplayName("GET запрос на получение списка всех продуктов /productsList")
+    @DisplayName("Проверка GET запроса на получение списка всех продуктов /productsList")
     public void testGetAllProducts() {
         Response response = productsClient.getAllProducts();
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
 
         List<Product> products = response.jsonPath().getList("products", Product.class);
         assertTrue(products.stream().allMatch(product ->
@@ -38,41 +41,37 @@ public class ApiPositiveTests extends BaseApiClient {
     }
 
     @Test()
-    @Tag("api")
-    @DisplayName("GET запрос на получение всех брендов")
+    @DisplayName("Проверка GET запроса на получение всех брендов /brandsList")
     public void testGetAllBrands() {
         Response response = productsClient.getAllBrandsList();
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
         List<Brand> brands = response.jsonPath().getList("brands", Brand.class);
         assertTrue(brands.stream().allMatch(brand -> brand.getId() > 0
                 && brand.getBrand() != null));
     }
 
     @Test
-    @Tag("api")
-    @DisplayName("POST запрос с параметром на поиск продуктов /searchProduct")
+    @DisplayName("Проверка POST запроса с параметром на поиск продуктов /searchProduct")
     public void testSearchProductsWithFormData() {
         Response response = productsClient.searchProductWithFormatData("top");
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
         List<Object> products = response.jsonPath().getList("products");
         assertFalse(products.isEmpty());
     }
 
     @Test
-    @Tag("api")
-    @DisplayName("POST запрос на валидацию логина с валидными имейлом и паролем /verifyLogin")
+    @DisplayName("Проверка POST запроса на валидацию логина с валидными имейлом и паролем /verifyLogin")
     public void testPostToVerifyLogin() {
         User user = UserGenerator.generateRandomUser();
         productsClient.postToCreateAccount(user);
         Response response = productsClient.postToVerifyLoginWithEmailAndPassword(user);
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
         assertEquals("User exists!", response.jsonPath().getString("message"));
         productsClient.deleteUserAccount(user);
     }
 
     @Test
-    @Tag("api")
-    @DisplayName("POST запрос на создание аккаунта /createAccount")
+    @DisplayName("Проверка POST запроса на создание аккаунта /createAccount")
     public void testPostToCreateOrRegisterUserAccount() {
         User user = UserGenerator.generateRandomUser();
         Response response = productsClient.postToCreateAccount(user);
@@ -82,36 +81,33 @@ public class ApiPositiveTests extends BaseApiClient {
     }
 
     @Test
-    @Tag("api")
-    @DisplayName("PUT запрос на обновление аккаунта /updateAccount")
+    @DisplayName("Проверка PUT запроса на обновление аккаунта /updateAccount")
     public void testPutToUpdateUserAccount() {
         User user = UserGenerator.generateRandomUser();
         productsClient.postToCreateAccount(user);
         Response response = productsClient.putToUpdateAccount(user);
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
         assertEquals("User updated!", response.jsonPath().getString("message"));
         productsClient.deleteUserAccount(user);
     }
 
     @Test
-    @Tag("api")
-    @DisplayName("DELETE запрос на удаление аккаунта /deleteAccount")
+    @DisplayName("Проверка DELETE запроса на удаление аккаунта /deleteAccount")
     public void testDeleteUserAccount() {
         User user = UserGenerator.generateRandomUser();
         productsClient.postToCreateAccount(user);
         Response response = productsClient.deleteUserAccount(user);
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
         assertEquals("Account deleted!", response.jsonPath().getString("message"));
     }
 
     @Test
-    @Tag("api")
-    @DisplayName("GET запрос на получение деталей пользователя /getUserDetailByEmail")
+    @DisplayName("Проверка GET запроса на получение деталей пользователя /getUserDetailByEmail")
     public void testGetUserDetailByEmail() {
         User user = UserGenerator.generateRandomUser();
         productsClient.postToCreateAccount(user);
         Response response = productsClient.getUserDetailByEmail(user.getEmail());
-        assertEquals(200, response.jsonPath().getInt("responseCode"));
+        assertSuccess200(response);
 
         ResponseBody body = response.getBody();
         assertEquals(user.getName(), body.jsonPath().getString("user.name"));
